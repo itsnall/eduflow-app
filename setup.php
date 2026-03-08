@@ -16,7 +16,8 @@
             <?php
             require 'config.php';
 
-            $sql = "CREATE TABLE IF NOT EXISTS users (
+            // 1. Buat Tabel Siswa
+            $sql_users = "CREATE TABLE IF NOT EXISTS users (
                 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(50) NOT NULL,
                 email VARCHAR(50) NOT NULL,
@@ -24,10 +25,19 @@
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
 
-            if ($conn->query($sql) === TRUE) {
+            // 2. Buat Tabel Admin
+            $sql_admins = "CREATE TABLE IF NOT EXISTS admins (
+                id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(50) NOT NULL,
+                email VARCHAR(50) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )";
+
+            if ($conn->query($sql_users) === TRUE && $conn->query($sql_admins) === TRUE) {
                 echo "<h4 class='text-success fw-bold mb-3'>Sistem Siap!</h4>";
-                echo "<p class='text-muted'>Tabel 'users' telah berhasil dibuat di dalam AWS RDS.</p>";
-                echo "<a href='index.php' class='btn btn-primary mt-3 px-4 py-2 rounded-pill'>Kembali ke Dashboard Utama</a>";
+                echo "<p class='text-muted'>Tabel 'users' dan 'admins' telah berhasil dibuat di AWS RDS.</p>";
+                echo "<a href='register_admin.php' class='btn btn-warning mt-3 px-4 py-2 rounded-pill fw-bold text-dark'>Lanjut Buat Akun Admin</a>";
             } else {
                 echo "<h4 class='text-danger fw-bold mb-3'>Terjadi Kesalahan</h4>";
                 echo "<p class='text-muted'>Error: " . $conn->error . "</p>";
