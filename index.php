@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             echo "<td><span class='badge bg-secondary'>#" . $row["id"]. "</span></td>";
                                             echo "<td class='fw-bold text-dark'>" . htmlspecialchars($row["name"]). "</td>";
                                             echo "<td>" . htmlspecialchars($row["email"]). "</td>";
-                                            echo "<td class='text-muted small'><i class="fa-regular fa-clock me-1"></i>" . $date . "</td>";
+                                            echo "<td class='text-muted small'><i class='fa-regular fa-clock me-1'></i>" . $date . "</td>";
                                             echo "</tr>";
                                         }
                                     } else {
