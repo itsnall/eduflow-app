@@ -64,7 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#"><i class="fa-solid fa-graduation-cap me-2"></i>EduFlow</a>
-            <span class="aws-badge d-none d-md-block"><i class="fa-brands fa-aws me-1"></i>Powered by AWS Cloud</span>
+            
+            <div class="d-flex align-items-center">
+                <span class="aws-badge d-none d-md-block me-3"><i class="fa-brands fa-aws me-1"></i>Powered by AWS Cloud</span>
+                <a href="login.php" class="btn btn-outline-light btn-sm fw-bold"><i class="fa-solid fa-right-to-bracket me-2"></i>Login Admin</a>
+            </div>
         </div>
     </nav>
 
