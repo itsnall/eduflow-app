@@ -4,23 +4,38 @@ require 'config.php';
 $pesan = "";
 $tipe_pesan = "";
 
-// Proses Form Pendaftaran
+// Menangkap notifikasi sukses dari proses Redirect
+if (isset($_GET['status']) && $_GET['status'] == 'success') {
+    $pesan = "Pendaftaran berhasil! Data siswa telah tersimpan dengan aman di AWS RDS.";
+    $tipe_pesan = "success";
+}
+
+// Proses Form Pendaftaran (POST)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $name, $email, $password);
     
-    if ($stmt->execute()) {
-        $pesan = "Pendaftaran berhasil! Data siswa telah tersimpan dengan aman di AWS RDS.";
-        $tipe_pesan = "success";
+    if ($stmt) {
+        $stmt->bind_param("sss", $name, $email, $password);
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            
+            // Trik PRG (Post/Redirect/Get) untuk mencegah resubmission
+            header("Location: index.php?status=success");
+            exit(); // Hentikan skrip agar tidak lanjut mengeksekusi kode di bawahnya
+            
+        } else {
+            $pesan = "Error saat menyimpan: " . $stmt->error;
+            $tipe_pesan = "danger";
+        }
     } else {
-        $pesan = "Error: " . $stmt->error;
+        $pesan = "Database belum siap! Silakan inisialisasi tabel terlebih dahulu.";
         $tipe_pesan = "danger";
     }
-    $stmt->close();
 }
 ?>
 
