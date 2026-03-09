@@ -102,7 +102,12 @@ $result = $stmt->get_result();
         <div class="card">
             <div class="card-header bg-white d-flex justify-content-between align-items-center pt-3 pb-2 border-0">
                 <h5 class="mb-0 text-primary fw-bold"><i class="fa-solid fa-table-list me-2"></i>Manajemen Data Siswa</h5>
-                <a href="index.php" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-plus me-1"></i>Tambah Siswa Baru</a>
+                
+                <div>
+                    <a href="upload_materi.php" class="btn btn-warning btn-sm fw-bold me-2"><i class="fa-solid fa-cloud-arrow-up me-1"></i>Upload Materi S3</a>
+                    
+                    <a href="index.php" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-plus me-1"></i>Tambah Siswa Baru</a>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
