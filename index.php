@@ -161,7 +161,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         echo "Belum ada data siswa.<br><a href='setup.php' class='btn btn-outline-primary btn-sm mt-3'>Inisialisasi Database Pertama Kali</a>";
                                         echo "</td></tr>";
                                     }
-                                    $conn->close();
                                     ?>
                                 </tbody>
                             </table>
