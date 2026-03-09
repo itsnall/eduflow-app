@@ -34,6 +34,15 @@
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
 
+            // 3. Buat Tabel Materi
+            $sql_materials = "CREATE TABLE IF NOT EXISTS materials (
+                id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                title VARCHAR(100) NOT NULL,
+                file_name VARCHAR(255) NOT NULL,
+                uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )";
+            $conn->query($sql_materials);
+
             if ($conn->query($sql_users) === TRUE && $conn->query($sql_admins) === TRUE) {
                 echo "<h4 class='text-success fw-bold mb-3'>Sistem Siap!</h4>";
                 echo "<p class='text-muted'>Tabel 'users' dan 'admins' telah berhasil dibuat di AWS RDS.</p>";

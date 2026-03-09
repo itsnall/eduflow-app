@@ -170,6 +170,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card h-100">
+                    <div class="card-header bg-white pt-4 pb-0 d-flex justify-content-between">
+                        <h5 class="mb-0"><i class="fa-solid fa-book text-warning me-2"></i>Materi Pelajaran (Amazon S3)</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <?php
+                            $sql_mat = "SELECT title, file_name FROM materials ORDER BY id DESC";
+                            $res_mat = $conn->query($sql_mat);
+
+                            if ($res_mat && $res_mat->num_rows > 0) {
+                                while($mat = $res_mat->fetch_assoc()) {
+                                    $s3_path = "s3://" . $s3_bucket . "/" . $mat['file_name'];
+                                    // Membuat URL Pre-Signed yang kedaluwarsa dalam 1 Jam (3600 detik)
+                                    $cmd = "aws s3 presign " . escapeshellarg($s3_path) . " --expires-in 3600 --region " . escapeshellarg($s3_region);
+                                    $presigned_url = shell_exec($cmd);
+                                    
+                                    echo "<li class='list-group-item d-flex justify-content-between align-items-center'>";
+                                    echo "<span><i class='fa-regular fa-file-pdf text-danger me-2'></i> " . htmlspecialchars($mat['title']) . "</span>";
+                                    echo "<a href='" . trim($presigned_url) . "' target='_blank' class='btn btn-sm btn-outline-primary'>Download</a>";
+                                    echo "</li>";
+                                }
+                            } else {
+                                echo "<li class='list-group-item text-muted text-center'>Belum ada materi yang diunggah.</li>";
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <div class="row mt-5 mb-3">
             <div class="col-12 text-center text-muted small">
